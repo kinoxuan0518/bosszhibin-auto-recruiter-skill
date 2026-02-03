@@ -117,7 +117,7 @@ v7.1版本实现了革命性的**自动复盘与进化系统**，彻底解放HR�
 ## 🚀 安装使用
 
 ### 环境要求
-- ✅ Claude Code SDK
+- ✅ Claude Cowork/Qoder
 - ✅ BOSS直聘企业账号
 
 ### 快速开始
