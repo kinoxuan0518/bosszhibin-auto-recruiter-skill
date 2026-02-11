@@ -1,0 +1,163 @@
+{
+  "execution_id": "exec_YYYYMMDD_NNN",
+  "skill_version": "7.3-consolidated",
+  "execution_timestamp": "2026-02-11T10:30:00",
+  "execution_time_minutes": 0,
+  "jobs_processed": [
+    {
+      "job_id": "job_2",
+      "job_name": "AI算法工程师",
+      "priority": "high",
+      "tabs_processed": [
+        {
+          "tab_name": "推荐牛人",
+          "traversal_metrics": {
+            "total_scrolls": 0,
+            "candidates_seen": 0,
+            "duplicate_encounters": 0,
+            "termination_reason": "显示没有更多 | 连续滚动无变化 | 每日上限触发 | 人工中断 | 其他",
+            "time_cost_seconds": 0,
+            "pages_loaded": 0,
+            "load_errors": 0
+          },
+          "screening_metrics": {
+            "total_candidates": 0,
+            "already_contacted": 0,
+            "passed_hard_filter": 0,
+            "contacted": 0,
+            "rejection_reasons": {
+              "failed_school": 0,
+              "failed_company": 0,
+              "failed_degree": 0,
+              "failed_major": 0,
+              "failed_score_threshold": 0
+            },
+            "pass_rate": 0.0,
+            "contact_success_rate": 0.0
+          },
+          "operation_metrics": {
+            "avg_batch_size": 0,
+            "batches_processed": 0,
+            "button_check_failures": 0,
+            "contact_failures": 0,
+            "retries": 0,
+            "daily_quota_hit": false,
+            "rate_limit_hits": 0,
+            "idempotent_skip_count": 0,
+            "manual_stop_triggered": false
+          },
+          "scoring_distribution": {
+            "90-100": 0,
+            "80-89": 0,
+            "70-79": 0,
+            "60-69": 0,
+            "below_60": 0,
+            "avg_score": 0.0,
+            "top_contacted_avg": 0.0,
+            "contacted_scores": []
+          },
+          "quality_indicators": {
+            "top_school_ratio": 0.0,
+            "target_company_ratio": 0.0,
+            "active_candidates_ratio": 0.0
+          },
+          "parse_quality_metrics": {
+            "name_parse_failure_count": 0,
+            "key_field_parse_failure_count": 0,
+            "parse_failure_ratio": 0.0,
+            "parse_quality_anomaly": false,
+            "confidence_level": "high | medium | low"
+          },
+          "contact_trace_samples": [
+            {
+              "candidate_fingerprint": "hash_or_compound_key",
+              "action_time": "2026-02-11T10:31:00",
+              "rule_label": "experienced_1_5y | campus_exception",
+              "trigger_summary": {
+                "school": "pass | fail",
+                "ai_skill": "pass | fail",
+                "company": "pass | fail",
+                "experience": "pass | fail"
+              },
+              "idempotent_result": "clicked | skipped_duplicate | skipped_state_mismatch"
+            }
+          ]
+        },
+        {
+          "tab_name": "新牛人",
+          "traversal_metrics": {},
+          "screening_metrics": {},
+          "operation_metrics": {},
+          "scoring_distribution": {},
+          "quality_indicators": {},
+          "parse_quality_metrics": {},
+          "contact_trace_samples": []
+        }
+      ],
+      "job_summary": {
+        "total_seen": 0,
+        "total_contacted": 0,
+        "total_skipped": 0,
+        "overall_pass_rate": 0.0,
+        "avg_candidate_quality": 0.0,
+        "efficiency_rating": "优秀 | 良好 | 一般 | 较差"
+      }
+    }
+  ],
+  "overall_metrics": {
+    "total_jobs": 0,
+    "total_candidates_seen": 0,
+    "total_contacted": 0,
+    "total_time_minutes": 0,
+    "avg_pass_rate": 0.0,
+    "avg_candidate_score": 0.0,
+    "efficiency_score": 0.0,
+    "daily_quota_hit": false,
+    "rate_limit_hits": 0,
+    "idempotent_skip_count": 0,
+    "manual_stop_triggered": false,
+    "parse_quality_anomaly_jobs": 0
+  },
+  "anomalies_detected": [
+    {
+      "severity": "high | medium | low",
+      "type": "traversal_efficiency | screening_pass_rate | button_recognition | contact_failure | score_distribution | coverage | daily_quota | rate_limit_backoff | parse_quality | idempotency",
+      "job_affected": "job_id",
+      "description": "异常描述",
+      "metric_value": 0.0,
+      "threshold": 0.0,
+      "suggestions": [
+        "优化建议1",
+        "优化建议2"
+      ]
+    }
+  ],
+  "optimizations_suggested": [
+    {
+      "priority": "high | medium | low",
+      "category": "配置优化 | 流程优化 | 性能优化 | 质量优化",
+      "title": "优化标题",
+      "current_state": "当前状态描述",
+      "proposed_change": "建议改进方案",
+      "expected_impact": "预期效果",
+      "implementation_difficulty": "低 | 中 | 高",
+      "status": "pending | applied | rejected"
+    }
+  ],
+  "comparison_with_history": {
+    "previous_execution_id": "exec_YYYYMMDD_NNN",
+    "metrics_changes": {
+      "coverage_rate": "+15%",
+      "pass_rate": "-3%",
+      "candidate_quality": "+4.2分"
+    },
+    "issues_resolved": [],
+    "issues_persisting": [],
+    "new_issues": []
+  },
+  "action_plan": {
+    "immediate_actions": [],
+    "short_term_optimizations": [],
+    "long_term_improvements": []
+  }
+}

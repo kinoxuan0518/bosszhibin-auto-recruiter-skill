@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boss直聘自动招聘"
+  short_description: "自动解析职位配置、筛选候选人并生成复盘报告，支持缓存与增量更新"
+  default_prompt: "在Boss直聘企业端按流程读取职位、应用缓存配置、筛选候选人并生成执行与复盘报告。"
