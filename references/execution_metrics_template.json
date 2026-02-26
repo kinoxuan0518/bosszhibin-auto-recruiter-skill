@@ -1,6 +1,6 @@
 {
   "execution_id": "exec_YYYYMMDD_NNN",
-  "skill_version": "7.3-consolidated",
+  "skill_version": "7.3.2-main-page-stability",
   "execution_timestamp": "2026-02-11T10:30:00",
   "execution_time_minutes": 0,
   "jobs_processed": [
@@ -11,11 +11,44 @@
       "tabs_processed": [
         {
           "tab_name": "推荐牛人",
+          "prefilter_metrics": {
+            "enabled": true,
+            "panel_opened": true,
+            "apply_success": true,
+            "apply_success_rate": 1.0,
+            "candidates_before_prefilter": 0,
+            "candidates_after_prefilter": 0,
+            "reduced_ratio": 0.0,
+            "fallback_channel_triggered": false,
+            "fallback_channel_runs": 0,
+            "mapped_filters": {
+              "experience": [
+                "1-3年",
+                "3-5年"
+              ],
+              "school": [
+                "985",
+                "国内外名校"
+              ],
+              "education": [
+                "本科"
+              ],
+              "keywords": [
+                "大模型",
+                "机器学习"
+              ],
+              "recent_unviewed": "近14天没有"
+            }
+          },
           "traversal_metrics": {
             "total_scrolls": 0,
             "candidates_seen": 0,
             "duplicate_encounters": 0,
             "termination_reason": "显示没有更多 | 连续滚动无变化 | 每日上限触发 | 人工中断 | 其他",
+            "no_contact_streak_max": 0,
+            "strict_pool_empty_hits": 0,
+            "tab_exhausted": false,
+            "tab_exhaust_reason": "no_more_signal | scroll_stable | no_contact_streak | daily_quota",
             "time_cost_seconds": 0,
             "pages_loaded": 0,
             "load_errors": 0
@@ -116,12 +149,23 @@
     "rate_limit_hits": 0,
     "idempotent_skip_count": 0,
     "manual_stop_triggered": false,
-    "parse_quality_anomaly_jobs": 0
+    "parse_quality_anomaly_jobs": 0,
+    "prefilter_apply_success_rate": 1.0,
+    "prefilter_reduced_ratio_avg": 0.0,
+    "prefilter_fallback_runs": 0,
+    "selected_tab_policy": "recommended_latest_first",
+    "strict_pool_empty_hits": 0,
+    "no_contact_streak_max": 0,
+    "tab_exhausted_map": {
+      "推荐": false,
+      "最新": false,
+      "精选": false
+    }
   },
   "anomalies_detected": [
     {
       "severity": "high | medium | low",
-      "type": "traversal_efficiency | screening_pass_rate | button_recognition | contact_failure | score_distribution | coverage | daily_quota | rate_limit_backoff | parse_quality | idempotency",
+      "type": "traversal_efficiency | screening_pass_rate | button_recognition | contact_failure | score_distribution | coverage | daily_quota | rate_limit_backoff | parse_quality | idempotency | prefilter_apply_failure | tab_detection | strict_pool_empty",
       "job_affected": "job_id",
       "description": "异常描述",
       "metric_value": 0.0,
