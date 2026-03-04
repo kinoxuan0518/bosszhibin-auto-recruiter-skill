@@ -223,3 +223,31 @@ LLM 工具输出（示例）：
 - 相同 `candidate_fingerprint` 二次写入会触发更新而非重复新增。
 - 触发 429 时能看到重试行为与最终结果。
 - 技能总结中可看到飞书同步成功/失败统计。
+
+## 10. 直接使用仓库通用脚本
+
+脚本路径：`scripts/feishu_candidate_sync.py`
+
+先设置环境变量：
+
+```bash
+export FEISHU_APP_ID="your_app_id"
+export FEISHU_APP_SECRET="your_app_secret"
+export FEISHU_BITABLE_APP_TOKEN="your_bitable_app_token"
+export FEISHU_TABLE_CANDIDATE_MASTER="your_table_id_1"
+export FEISHU_TABLE_INTERACTION_LOG="your_table_id_2"
+export FEISHU_TABLE_JOB_FUNNEL_DAILY="your_table_id_3"
+```
+干跑（不写飞书）：
+
+```bash
+python3 scripts/feishu_candidate_sync.py --dry-run /path/to/session_output.json
+```
+
+正式写入：
+
+```bash
+python3 scripts/feishu_candidate_sync.py /path/to/session_output.json
+```
+
+不传输入文件时，脚本会自动尝试读取 `${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}` 下最新的 `session_output*.json`。

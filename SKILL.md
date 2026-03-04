@@ -379,6 +379,7 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 
 ### 5.6 LLM 工具配置文档
 - 详细配置与数据通信示例见：`references/feishu_bitable_llm_setup.md`
+- 通用同步脚本：`scripts/feishu_candidate_sync.py`
 
 ---
 

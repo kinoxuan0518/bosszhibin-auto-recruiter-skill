@@ -16,6 +16,8 @@ Boss直聘自动招聘技能（v7.3，已脱敏，支持飞书多维表格同步
 ```text
 .
 ├── SKILL.md
+├── scripts/
+│   └── feishu_candidate_sync.py
 ├── agents/
 │   └── openai.yaml
 └── references/
@@ -42,11 +44,28 @@ Boss直聘自动招聘技能（v7.3，已脱敏，支持飞书多维表格同步
 ## 飞书接入
 
 - LLM 工具接入说明：`references/feishu_bitable_llm_setup.md`
+- 通用同步脚本：`scripts/feishu_candidate_sync.py`
 - 该说明包含：
   - 如何创建自己的飞书应用与多维表格
   - 必要权限与字段设计
   - 幂等写入与重试策略
   - API 调用示例与输入输出通信契约
+
+### 快速使用（脚本）
+
+1. 准备环境变量（`FEISHU_*`）。
+2. 干跑校验映射：
+```bash
+python3 scripts/feishu_candidate_sync.py --dry-run /path/to/session_output.json
+```
+3. 正式同步：
+```bash
+python3 scripts/feishu_candidate_sync.py /path/to/session_output.json
+```
+4. 批量同步多个文件：
+```bash
+python3 scripts/feishu_candidate_sync.py file1.json file2.json file3.json
+```
 
 ## 兼容说明
 
