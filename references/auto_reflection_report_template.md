@@ -161,7 +161,7 @@
 ## 💾 本次优化已记录到进化历史
 
 **进化记录保存位置**：
-`/home/claude/bosszhibin_cache/evolution_history.json`
+`${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}/evolution_history.json`
 
 **本次记录包含**：
 - ✅ 执行指标数据

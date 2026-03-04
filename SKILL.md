@@ -5,7 +5,7 @@ description: Boss直聘自动招聘技能（带缓存）：智能存储职位配
 
 # Boss直聘自动招聘技能（v7.3）
 
-版本：7.3.2-main-page-stability | 更新日期：2026-02-26
+版本：7.3.3-feishu-sync-desensitized | 更新日期：2026-03-04
 
 ## 设计原则
 
@@ -69,8 +69,9 @@ description: Boss直聘自动招聘技能（带缓存）：智能存储职位配
 ## 二、缓存结构与规则分层
 
 ### 缓存文件位置
-- 主缓存：`/home/claude/bosszhibin_cache/bosszhibin_jobs_cache.json`
-- 进化历史：`/home/claude/bosszhibin_cache/evolution_history.json`
+- 缓存目录：`${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}`
+- 主缓存：`${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}/bosszhibin_jobs_cache.json`
+- 进化历史：`${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}/evolution_history.json`
 
 ### v7.3 缓存核心结构
 
@@ -94,6 +95,24 @@ description: Boss直聘自动招聘技能（带缓存）：智能存储职位配
     "year_parse_policy": {
       "exclude_campus_year_as_experience": true,
       "trusted_patterns": ["X年工作经验", "工作起止时间推算"]
+    },
+    "integration_policy": {
+      "feishu_bitable": {
+        "enabled": false,
+        "base_url": "https://open.feishu.cn",
+        "auth_mode": "tenant_access_token_from_env",
+        "app_token": "",
+        "tables": {
+          "candidate_master": "",
+          "interaction_log": "",
+          "job_funnel_daily": ""
+        },
+        "idempotent_keys": {
+          "candidate_master": "candidate_fingerprint",
+          "interaction_log": "interaction_fingerprint"
+        },
+        "fail_open": true
+      }
     },
     "ui_prefilter_policy": {
       "enabled": true,
@@ -159,6 +178,7 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 5. 选择流程模式：`main_only`（默认）或 `full`
 6. 确认职位处理优先级
 7. 确认是否启用 `ui_prefilter_policy`（默认启用）
+8. 确认是否启用 `integration_policy.feishu_bitable`（默认关闭；开启时需先完成飞书配置）
 
 ### 阶段 1：职位解析与规则同步
 
@@ -274,6 +294,7 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 - 终止原因与风控事件（上限触发、频率告警、人工中断）
 - 解析质量异常批次需附"可信度下降"提示
 - 与上次执行的历史对比
+- 外部同步状态（如飞书多维表格同步成功/失败/重试次数）
 
 ### 4.2 自动复盘（任务完成后主动输出）
 
@@ -319,11 +340,49 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 - `references/evolution_history_template.json` — 进化历史结构
 
 ### 4.3 更新进化历史
-将本次复盘结果追加到 `/home/claude/bosszhibin_cache/evolution_history.json`，下次执行时自动加载用于对比分析。
+将本次复盘结果追加到 `${BOSSZHIBIN_CACHE_DIR:-~/.codex/bosszhibin_cache}/evolution_history.json`，下次执行时自动加载用于对比分析。
 
 ---
 
-## 五、异常情况处理
+## 五、飞书多维表格同步协议（可选）
+
+当 `integration_policy.feishu_bitable.enabled=true` 时，执行以下同步协议：
+
+### 5.1 同步目标
+- `candidate_master`：候选人主档（去重主表）
+- `interaction_log`：每次打招呼/沟通动作留痕
+- `job_funnel_daily`：职位级日汇总指标
+
+### 5.2 写入时机
+- 每处理完一个职位后：写入职位漏斗汇总 + 当轮候选人触达记录
+- 任务结束后：写入全局执行摘要（可追加到 `job_funnel_daily` 或独立统计表）
+
+### 5.3 幂等与一致性
+- 主档去重键：`candidate_fingerprint`（建议 `name|school|company|job_id`）
+- 交互去重键：`interaction_fingerprint`（建议 `candidate_fingerprint|action_time|action_type`）
+- 写入前先查重，命中则更新，不命中则新建
+
+### 5.4 失败策略
+- `fail_open=true`：飞书写入失败不阻塞招聘主流程，只记录异常并在总结中提示
+- 对 429/5xx 做指数退避重试（建议 1s/2s/4s，最多 3 次）
+- 连续失败超过阈值后停止同步，避免拖慢主任务
+
+### 5.5 鉴权与安全
+- `tenant_access_token` 仅从环境变量或密钥管理读取，禁止写入仓库
+- 建议环境变量：
+  - `FEISHU_APP_ID`
+  - `FEISHU_APP_SECRET`
+  - `FEISHU_BITABLE_APP_TOKEN`
+  - `FEISHU_TABLE_CANDIDATE_MASTER`
+  - `FEISHU_TABLE_INTERACTION_LOG`
+  - `FEISHU_TABLE_JOB_FUNNEL_DAILY`
+
+### 5.6 LLM 工具配置文档
+- 详细配置与数据通信示例见：`references/feishu_bitable_llm_setup.md`
+
+---
+
+## 六、异常情况处理
 
 | 异常 | 处理方式 |
 |------|----------|
@@ -337,7 +396,7 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 
 ---
 
-## 六、缓存管理命令
+## 七、缓存管理命令
 
 | 命令 | 说明 |
 |------|------|
@@ -349,7 +408,7 @@ effective_prefilter = effective_rules.ui_prefilter_policy
 
 ---
 
-## 七、重要提醒
+## 八、重要提醒
 
 **限制**：无法绕过平台每日沟通上限；无法自动回复候选人消息；平台无直接 `QS100` 与目标公司名单筛选；筛选基于列表信息可能遗漏部分优质候选人；需人工最终决策。
 

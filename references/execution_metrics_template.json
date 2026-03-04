@@ -1,6 +1,6 @@
 {
   "execution_id": "exec_YYYYMMDD_NNN",
-  "skill_version": "7.3.2-main-page-stability",
+  "skill_version": "7.3.3-feishu-sync-desensitized",
   "execution_timestamp": "2026-02-11T10:30:00",
   "execution_time_minutes": 0,
   "jobs_processed": [
@@ -79,6 +79,15 @@
             "idempotent_skip_count": 0,
             "manual_stop_triggered": false
           },
+          "feishu_sync_metrics": {
+            "enabled": false,
+            "candidate_master_upserts": 0,
+            "interaction_log_upserts": 0,
+            "job_funnel_upserts": 0,
+            "api_retries": 0,
+            "api_failures": 0,
+            "last_error": null
+          },
           "scoring_distribution": {
             "90-100": 0,
             "80-89": 0,
@@ -149,6 +158,9 @@
     "rate_limit_hits": 0,
     "idempotent_skip_count": 0,
     "manual_stop_triggered": false,
+    "feishu_sync_enabled": false,
+    "feishu_sync_total_upserts": 0,
+    "feishu_sync_total_failures": 0,
     "parse_quality_anomaly_jobs": 0,
     "prefilter_apply_success_rate": 1.0,
     "prefilter_reduced_ratio_avg": 0.0,
@@ -165,7 +177,7 @@
   "anomalies_detected": [
     {
       "severity": "high | medium | low",
-      "type": "traversal_efficiency | screening_pass_rate | button_recognition | contact_failure | score_distribution | coverage | daily_quota | rate_limit_backoff | parse_quality | idempotency | prefilter_apply_failure | tab_detection | strict_pool_empty",
+      "type": "traversal_efficiency | screening_pass_rate | button_recognition | contact_failure | score_distribution | coverage | daily_quota | rate_limit_backoff | parse_quality | idempotency | prefilter_apply_failure | tab_detection | strict_pool_empty | external_sync",
       "job_affected": "job_id",
       "description": "异常描述",
       "metric_value": 0.0,
